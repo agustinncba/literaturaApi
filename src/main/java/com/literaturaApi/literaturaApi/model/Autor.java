@@ -85,7 +85,7 @@ public class Autor {
                 ", nombre='" + nombre + '\'' +
                 ", fechaNacimiento='" + fechaNacimiento + '\'' +
                 ", fechaFallecimiento='" + fechaFallecimiento + '\'' +
-                ", libros=" + libros +
+                ", libros=" + libros.stream().map(l-> new String(l.getTitulo())).toList() +
                 '}';
     }
 }

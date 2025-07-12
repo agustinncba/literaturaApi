@@ -14,7 +14,10 @@ public class AutorService {
     AutorRepository autorRepository;
 
     public List<Autor> listarAutores() {
-        // a continuar
-        return null;
+        return autorRepository.findAll();
+    }
+
+    public List<Autor> autoresVivos(Integer anio) {
+        return autorRepository.listarAutoresEntreFechas(anio);
     }
 }

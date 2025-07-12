@@ -10,9 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class LibroService {
@@ -73,5 +72,18 @@ public class LibroService {
 
     public List<Libro> listarLibros() {
         return libroRepository.findAll();
+    }
+
+    public Long cantidadLibrosPorIdioma(String idioma) {
+        List<Libro> libros = listarLibros();
+        return libros.stream()
+                .filter(l -> l.getIdiomas().contains(idioma))
+                .count();
+    }
+
+    public List<Libro> listarLibrosPorIdiomaPaginado(String idioma) {
+        return listarLibros().stream()
+                .filter(l -> l.getIdiomas().contains(idioma))
+                .collect(Collectors.toList());
     }
 }

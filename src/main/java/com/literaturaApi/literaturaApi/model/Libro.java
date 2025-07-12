@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -25,7 +24,7 @@ public class Libro {
     private List<Autor> autores;
 
     @JsonAlias("languages")
-    private String[] idiomas;
+    private List<String> idiomas;
 
     @JsonAlias("download_count")
     private Integer cantidadDescargas;
@@ -33,7 +32,7 @@ public class Libro {
     public Libro() {
     }
 
-    public Libro(Long id, String titulo, List<Autor> autores, String[] idiomas, Integer cantidadDescargas) {
+    public Libro(Long id, String titulo, List<Autor> autores, List<String> idiomas, Integer cantidadDescargas) {
         this.id = id;
         this.titulo = titulo;
         this.autores = autores;
@@ -65,11 +64,11 @@ public class Libro {
         this.autores = autores;
     }
 
-    public String[] getIdiomas() {
+    public List<String> getIdiomas() {
         return idiomas;
     }
 
-    public void setIdiomas(String[] idiomas) {
+    public void setIdiomas(List<String> idiomas) {
         this.idiomas = idiomas;
     }
 
@@ -87,7 +86,7 @@ public class Libro {
                 "id=" + id +
                 ", titulo='" + titulo +
                 ", autores=" + autores.stream().map(a -> new String(a.getNombre())).toList() +
-                ", idiomas=" + Arrays.toString(idiomas) + '\'' +
+                ", idiomas=" + idiomas + '\'' +
                 ", cantidadDescargas=" + cantidadDescargas +
                 '}';
     }

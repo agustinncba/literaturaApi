@@ -1,6 +1,8 @@
 package com.literaturaApi.literaturaApi.principal;
 
+import com.literaturaApi.literaturaApi.model.Autor;
 import com.literaturaApi.literaturaApi.model.Libro;
+import com.literaturaApi.literaturaApi.service.AutorService;
 import com.literaturaApi.literaturaApi.service.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +17,9 @@ public class Principal {
 
     @Autowired
     LibroService libroService;
+
+    @Autowired
+    AutorService autorService;
 
     public void mostrarMenu() {
 
@@ -53,6 +58,40 @@ public class Principal {
                     List<Libro> libros = libroService.listarLibros();
                     libros.forEach(System.out::println);
                     break;
+                case 3:
+                    autorService.listarAutores().forEach(System.out::println);
+                    break;
+                case 4:
+                    System.out.println("Ingrese el año");
+                    Integer anio = leer.nextInt();
+                    List<Autor> autoresVivos = autorService.autoresVivos(anio);
+                    if (!autoresVivos.isEmpty()) {
+                        autoresVivos.forEach(System.out::println);
+                    } else {
+                        System.out.println("No se encontraron autores vivos en ese año");
+                    }
+                    break;
+                case 5:
+                    System.out.println("Ingrese el idioma que desea filtrar");
+                    String idioma = leer.next();
+                    Long cantidad = libroService.cantidadLibrosPorIdioma(idioma);
+                    if (cantidad != 0) {
+                        System.out.println(cantidad);
+                    } else {
+                        System.out.println("No se encontraron libros con ese idioma");
+                    }
+                    break;
+                case 6:
+                    System.out.println("Ingrese el idioma que desea filtrar");
+                    idioma = leer.next();
+                    List<Libro> librosPaginado = libroService.listarLibrosPorIdiomaPaginado(idioma);
+                    if (!librosPaginado.isEmpty()) {
+                        librosPaginado.forEach(System.out::println);
+                    } else {
+                        System.out.println("No se encontraron libros con ese idioma");
+                    }
+                    break;
+
                 default:
                     System.out.println("opcion default");
                     break;
